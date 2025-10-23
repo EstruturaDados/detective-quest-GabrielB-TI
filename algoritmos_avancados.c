@@ -37,3 +37,48 @@ Sala* criarMansao() {
     return hall;
 }
 
+void explorarSalas(Sala* atual) {
+    char opcao;
+
+    while (atual != NULL) {
+        printf("\nVocê está na: %s\n", atual->nome);
+
+        //(sala sem caminhos)
+        if (atual->esquerda == NULL && atual->direita == NULL) {
+            printf("Fim do caminho! Não há mais portas para explorar.\n");
+            break;
+        }
+
+        printf("Escolha o caminho:\n");
+        if (atual->esquerda != NULL) printf("  (e) Ir para a esquerda -> %s\n", atual->esquerda->nome);
+        if (atual->direita  != NULL) printf("  (d) Ir para a direita -> %s\n", atual->direita->nome);
+        printf("  (s) Sair da exploração\n");
+        printf("Opção: ");
+        scanf(" %c", &opcao);
+
+        if (opcao == 'e' && atual->esquerda != NULL) {
+            atual = atual->esquerda;
+        } 
+        else if (opcao == 'd' && atual->direita != NULL) {
+            atual = atual->direita;
+        } 
+        else if (opcao == 's') {
+            printf("\nVocê decidiu sair da exploração.\n");
+            break;
+        } 
+        else {
+            printf("\nOpção inválida! Tente novamente.\n");
+        }
+    }
+}
+
+// Função principal
+int main() {
+    Sala* mansao = criarMansao();
+
+    printf("=== Mapa da Mansão com Árvore Binária ===\n");
+    explorarSalas(mansao);
+
+    printf("\nExploração encerrada.\n");
+    return 0;
+}
